@@ -1,0 +1,225 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Niklas</title>
+<meta name="description" content="Niklas Degliam — maths, ML and markets. Frankfurt.">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://niklasdgl.github.io/">
+<meta property="og:title" content="Niklas Degliam">
+<meta property="og:description" content="Maths, ML and markets. Frankfurt.">
+<meta property="og:image" content="https://niklasdgl.github.io/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;1,9..144,400&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #f4f0e8; --ink: #17140f; --muted: #6d665a; --accent: #c2410c; --trail: 194, 65, 12; --twin: 23, 20, 15;
+    --gutter: clamp(20px, 4vw, 56px);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) { --paper: #000; --ink: #ece6da; --muted: #8f877a; --accent: #f59e0b; --trail: 245, 158, 11; --twin: 236, 230, 218; }
+  }
+  :root[data-theme="dark"] { --paper: #000; --ink: #ece6da; --muted: #8f877a; --accent: #f59e0b; --trail: 245, 158, 11; --twin: 236, 230, 218; }
+
+  * { box-sizing: border-box; margin: 0; }
+  html, body { height: 100%; }
+  body { background: var(--paper); color: var(--ink); font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 0.8rem; overflow: hidden; }
+  a { color: var(--muted); text-decoration: none; transition: color 150ms; }
+  a:hover { color: var(--accent); }
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+
+  #lorenz { position: fixed; inset: 0; width: 100%; height: 100%; cursor: grab; touch-action: pan-y; }
+  #lorenz:active { cursor: grabbing; }
+
+  .id { position: fixed; left: var(--gutter); bottom: var(--gutter); }
+  h1 {
+    font-family: "Fraunces", Georgia, serif; font-weight: 300;
+    font-size: clamp(3.5rem, 2rem + 7vw, 8rem); line-height: 0.9; letter-spacing: -0.045em;
+    font-variation-settings: "opsz" 144; margin-bottom: 20px;
+  }
+  h1 em { font-weight: 400; color: var(--accent); }
+  .id ul { list-style: none; padding: 0; display: grid; gap: 6px; }
+
+  .knob { position: fixed; right: var(--gutter); bottom: var(--gutter); width: 180px; display: grid; gap: 6px; color: var(--muted); text-align: right; }
+  .knob output { color: var(--accent); }
+  input[type="range"] { -webkit-appearance: none; appearance: none; width: 100%; height: 18px; background: transparent; }
+  input[type="range"]::-webkit-slider-runnable-track { height: 1px; background: var(--muted); }
+  input[type="range"]::-moz-range-track { height: 1px; background: var(--muted); }
+  input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; width: 12px; height: 12px; margin-top: -6px; border-radius: 50%; background: var(--accent); }
+  input[type="range"]::-moz-range-thumb { width: 12px; height: 12px; border: 0; border-radius: 50%; background: var(--accent); }
+
+  .theme { position: fixed; top: var(--gutter); right: var(--gutter); background: none; border: 0; color: var(--muted); font: inherit; font-size: 1.3rem; cursor: pointer; }
+  .theme:hover { color: var(--ink); }
+
+  @media (max-width: 600px) {
+    .knob { width: 120px; }
+  }
+</style>
+</head>
+<body>
+
+<canvas id="lorenz" role="img" aria-label="Animated Lorenz attractor. Drag to rotate, click to start two nearly identical trajectories."></canvas>
+
+<button class="theme" id="theme" type="button" aria-label="Toggle colour theme">◐</button>
+
+<main class="id">
+  <h1>Nik<em>las</em></h1>
+  <ul>
+    <li><a href="https://github.com/niklasdgl">github</a></li>
+    <li><a href="cv.html">cv</a></li>
+    <li><a href="publications.html">publications</a></li>
+    <!-- <li><a href="https://www.linkedin.com/in/YOUR-HANDLE">linkedin ↗</a></li> -->
+  </ul>
+</main>
+
+<div class="knob">
+  <label for="rho">ρ = <output id="rhoOut" for="rho">28.0</output></label>
+  <input id="rho" type="range" min="10" max="40" step="0.1" value="28">
+</div>
+
+<script>
+(() => {
+  /* theme toggle, remembered per visitor */
+  const root = document.documentElement;
+  try { const t = localStorage.getItem("theme"); if (t) root.dataset.theme = t; } catch (e) {}
+  document.getElementById("theme").addEventListener("click", () => {
+    const isDark = root.dataset.theme ? root.dataset.theme === "dark" : matchMedia("(prefers-color-scheme: dark)").matches;
+    root.dataset.theme = isDark ? "light" : "dark";
+    try { localStorage.setItem("theme", root.dataset.theme); } catch (e) {}
+  });
+
+  /* Lorenz attractor, integrated live with RK4 */
+  const SIGMA = 10, BETA = 8 / 3, DT = 0.006, STEPS_PER_FRAME = 4;
+  const N_BASE = 3, TRAIL_LEN = 900, WARMUP = 1500, SWAY = 0.55;
+  const TWIN_OFFSET = 1e-6;      // click spawns two particles this far apart
+  const MAX_SPAWNED = 8;         // keep at most 4 twin pairs
+  const CLICK_SLOP = 5;          // px of movement before a press counts as a drag
+  const canvas = document.getElementById("lorenz");
+  const ctx = canvas.getContext("2d");
+  const rhoInput = document.getElementById("rho");
+  const rhoOut = document.getElementById("rhoOut");
+  const reduceMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  let rho = 28, angle = 0, t = 0, dragOffset = 0, w = 0, h = 0;
+  let press = null;              // {x, startX, moved} while the pointer is down
+
+  const deriv = ([x, y, z]) => [SIGMA * (y - x), x * (rho - z) - y, x * y - BETA * z];
+  const add = (a, b, k) => a.map((v, i) => v + b[i] * k);
+  const rk4 = (p) => {
+    const k1 = deriv(p), k2 = deriv(add(p, k1, DT / 2));
+    const k3 = deriv(add(p, k2, DT / 2)), k4 = deriv(add(p, k3, DT));
+    return p.map((v, i) => v + (DT / 6) * (k1[i] + 2 * k2[i] + 2 * k3[i] + k4[i]));
+  };
+
+  const makeBase = () => Array.from({ length: N_BASE }, (_, i) => {
+    let p = [1 + i * 1e-3, 1, 25];               // nearly identical starts → they diverge
+    for (let k = 0; k < WARMUP; k++) p = rk4(p); // skip the transient
+    const trail = [];
+    for (let k = 0; k < TRAIL_LEN; k++) { p = rk4(p); trail.push(p); }
+    return { p, trail, tone: "--trail", alpha: 0.85 - i * 0.22 };
+  });
+  let base = makeBase();
+  let spawned = [];
+
+  const resize = () => {
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    w = canvas.clientWidth; h = canvas.clientHeight;
+    canvas.width = w * dpr; canvas.height = h * dpr;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  };
+
+  const view = () => ({
+    c: Math.cos(angle), s: Math.sin(angle),
+    scale: Math.min(w / 46, h / 62),
+    cx: w > 900 ? w * 0.6 : w / 2,              // leave room for the name on wide screens
+    cy: h * 0.86,
+  });
+  const project = ([x, y, z], v) => [v.cx + (x * v.c - y * v.s) * v.scale, v.cy - z * v.scale];
+  // inverse of project on the plane facing the viewer
+  const unproject = (sx, sy) => {
+    const v = view(), u = (sx - v.cx) / v.scale;
+    return [u * v.c, -u * v.s, (v.cy - sy) / v.scale];
+  };
+
+  const spawnTwins = (sx, sy) => {
+    const p = unproject(sx, sy);
+    spawned.push(
+      { p, trail: [p], tone: "--trail", alpha: 1 },
+      { p: add(p, [1, 0, 0], TWIN_OFFSET), trail: [p], tone: "--twin", alpha: 0.9 },
+    );
+    if (spawned.length > MAX_SPAWNED) spawned = spawned.slice(-MAX_SPAWNED);
+  };
+
+  const step = () => {
+    for (const pt of [...base, ...spawned]) {
+      for (let i = 0; i < STEPS_PER_FRAME; i++) { pt.p = rk4(pt.p); pt.trail.push(pt.p); }
+      if (pt.trail.length > TRAIL_LEN) pt.trail.splice(0, pt.trail.length - TRAIL_LEN);
+    }
+  };
+
+  const drawParticle = (pt, rgb, v) => {
+    const tr = pt.trail, n = tr.length;
+    for (let i = 1; i < n; i++) {
+      const a = project(tr[i - 1], v), b = project(tr[i], v);
+      ctx.strokeStyle = `rgba(${rgb}, ${(i / n) * pt.alpha})`;
+      ctx.beginPath(); ctx.moveTo(a[0], a[1]); ctx.lineTo(b[0], b[1]); ctx.stroke();
+    }
+    const [hx, hy] = project(tr[n - 1], v);
+    ctx.fillStyle = `rgb(${rgb})`;
+    ctx.beginPath(); ctx.arc(hx, hy, 2.6, 0, Math.PI * 2); ctx.fill();
+  };
+
+  const draw = () => {
+    ctx.clearRect(0, 0, w, h);
+    const css = getComputedStyle(root), v = view();
+    const colors = { "--trail": css.getPropertyValue("--trail").trim(), "--twin": css.getPropertyValue("--twin").trim() };
+    ctx.lineWidth = 1.1;
+    for (const pt of [...base, ...spawned]) drawParticle(pt, colors[pt.tone], v);
+  };
+
+  const updateAngle = () => { angle = dragOffset + SWAY * Math.sin(t); };
+
+  const loop = () => {
+    if (!press || !press.moved) t += 0.004;     // sway around the butterfly view
+    updateAngle(); step(); draw();
+    requestAnimationFrame(loop);
+  };
+
+  rhoInput.addEventListener("input", () => {
+    rho = parseFloat(rhoInput.value);
+    rhoOut.textContent = rho.toFixed(1);
+    base = makeBase(); spawned = [];
+    if (reduceMotion) draw();
+  });
+
+  canvas.addEventListener("pointerdown", (e) => {
+    press = { x: e.clientX, startX: e.clientX, startY: e.clientY, moved: false };
+    canvas.setPointerCapture(e.pointerId);
+  });
+  canvas.addEventListener("pointermove", (e) => {
+    if (!press) return;
+    if (Math.abs(e.clientX - press.startX) > CLICK_SLOP) press.moved = true;
+    if (!press.moved) return;
+    dragOffset += (e.clientX - press.x) * 0.008; press.x = e.clientX;
+    if (reduceMotion) { updateAngle(); draw(); }
+  });
+  canvas.addEventListener("pointerup", (e) => {
+    if (press && !press.moved) spawnTwins(e.clientX, e.clientY);
+    press = null;
+  });
+  canvas.addEventListener("pointercancel", () => { press = null; });
+
+  window.addEventListener("resize", () => { resize(); draw(); });
+  resize();
+  if (reduceMotion) draw(); else loop();
+})();
+</script>
+</body>
+</html>
