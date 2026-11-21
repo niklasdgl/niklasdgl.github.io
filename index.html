@@ -21,7 +21,7 @@
 <style>
   :root {
     --paper: #f4f0e8; --ink: #17140f; --muted: #6d665a; --accent: #c2410c; --trail: 194, 65, 12; --twin: 23, 20, 15;
-    --gutter: clamp(20px, 4vw, 56px);
+    --gutter: 1rem;
   }
   @media (prefers-color-scheme: dark) {
     :root:not([data-theme="light"]) { --paper: #000; --ink: #ece6da; --muted: #8f877a; --accent: #f59e0b; --trail: 245, 158, 11; --twin: 236, 230, 218; }
@@ -30,7 +30,7 @@
 
   * { box-sizing: border-box; margin: 0; }
   html, body { height: 100%; }
-  body { background: var(--paper); color: var(--ink); font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 0.8rem; overflow: hidden; }
+  body { background: var(--paper); color: var(--ink); font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 0.875rem; line-height: 1.25rem; overflow: hidden; }
   a { color: var(--muted); text-decoration: none; transition: color 150ms; }
   a:hover { color: var(--accent); }
   :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
@@ -41,7 +41,7 @@
   .id { position: fixed; left: var(--gutter); bottom: var(--gutter); }
   h1 {
     font-family: "Fraunces", Georgia, serif; font-weight: 300;
-    font-size: clamp(3.5rem, 2rem + 7vw, 8rem); line-height: 0.9; letter-spacing: -0.045em;
+    font-size: 3rem; line-height: 1; letter-spacing: -0.045em;
     font-variation-settings: "opsz" 144; margin-bottom: 20px;
   }
   h1 em { font-weight: 400; color: var(--accent); }
@@ -58,6 +58,8 @@
   .theme { position: fixed; top: var(--gutter); right: var(--gutter); background: none; border: 0; color: var(--muted); font: inherit; font-size: 1.3rem; cursor: pointer; }
   .theme:hover { color: var(--ink); }
 
+  @media (min-width: 640px) { :root { --gutter: 2rem; } h1 { font-size: 3.75rem; } }
+  @media (min-width: 768px) { h1 { font-size: 4.5rem; } }
   @media (max-width: 600px) {
     .knob { width: 120px; }
   }
