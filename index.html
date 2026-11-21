@@ -105,7 +105,25 @@
   @media (min-width: 640px) { h2 { font-size: 1.875rem; line-height: 2.25rem; } }
   .intro { max-width: 42rem; margin-bottom: 2rem; font-size: .875rem; line-height: 1.625; color: #ccc; }
   .rig-grid { display: grid; gap: 1rem; }
-  @media (min-width: 1024px) { .rig-grid { grid-template-columns: repeat(3, 1fr); } }
+  @media (min-width: 900px) {
+    .rig-grid { grid-template-columns: 7fr 5fr; grid-template-areas: "main side1" "main side2"; }
+    .frame.main { grid-area: main; } .frame.s1 { grid-area: side1; } .frame.s2 { grid-area: side2; }
+  }
+  .frame { position: relative; }
+  .frame::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 2px; background: var(--ok); transform: scaleY(0); transform-origin: top; transition: transform .3s cubic-bezier(.16,1,.3,1); }
+  .frame:hover::before { transform: scaleY(1); }
+  .frame.main { display: flex; flex-direction: column; }
+  .frame.main dl.specs { flex: 1; display: flex; flex-direction: column; }
+  .frame.main dl.specs > div { padding: 1rem 1.25rem; }
+  .frame.main dl.specs > div.hero-spec { flex: 1; display: flex; flex-direction: column; justify-content: center; padding: 2rem 1.25rem; }
+  .hero-spec .row { flex-direction: column; align-items: flex-start; gap: .5rem; }
+  .frame.main .hero-spec .row dd { text-align: left; font-family: var(--mono); font-size: clamp(1.75rem, 1.1rem + 2.6vw, 2.75rem); line-height: 1.05; font-weight: 600; letter-spacing: -0.03em; }
+  .frame.main .hero-spec .row dd small { display: block; margin-top: .5rem; font-size: .75rem; font-weight: 400; letter-spacing: 0; color: var(--dim); }
+  .frame.main .row dd { font-family: var(--mono); font-size: .9375rem; }
+  .frame-head .idx { color: var(--dim); font-size: .6875rem; }
+  dl.specs > div { transition: background-color .15s ease; } dl.specs > div:hover { background: rgba(255,255,255,.025); }
+  .rig-total { margin-top: 1rem; font-family: var(--mono); font-size: .6875rem; color: var(--dim); }
+  .rig-total b { font-weight: 500; color: var(--muted); }
   .frame { border: 1px solid var(--line); background: var(--panel); overflow: hidden; transition: border-color .2s ease, background-color .2s ease, transform .2s ease; }
   .frame:hover { border-color: var(--line-hi); background: #141414; }
   .frame-head { display: flex; align-items: center; justify-content: space-between; padding: .625rem 1rem; border-bottom: 1px solid var(--line); font-family: var(--mono); }
@@ -198,16 +216,16 @@
     </div>
     <p class="intro">The hardware I train models, code and trade on.</p>
     <div class="rig-grid">
-      <div class="frame">
-        <div class="frame-head"><div class="t"><span class="p">~/</span><h3>main rig</h3></div><span class="n">3 units</span></div>
+      <div class="frame main">
+        <div class="frame-head"><div class="t"><span class="p">~/</span><h3>main rig</h3></div><span class="idx">01</span></div>
         <dl class="specs">
+          <div class="hero-spec"><div class="row"><dt>GPU</dt><dd>NVIDIA RTX 5080<small>// trains the models</small></dd></div></div>
           <div><div class="row"><dt>CPU</dt><dd>Intel Core i9-14900KF</dd></div></div>
-          <div><div class="row"><dt>GPU</dt><dd>NVIDIA RTX 5080</dd></div></div>
           <div><div class="row"><dt>RAM</dt><dd>64GB DDR5</dd></div><p class="note"><i>// </i>Crucial</p></div>
         </dl>
       </div>
-      <div class="frame">
-        <div class="frame-head"><div class="t"><span class="p">~/</span><h3>laptop</h3></div><span class="n">4 units</span></div>
+      <div class="frame s1">
+        <div class="frame-head"><div class="t"><span class="p">~/</span><h3>laptop</h3></div><span class="idx">02</span></div>
         <dl class="specs">
           <div><div class="row"><dt>MODEL</dt><dd>MacBook Pro</dd></div></div>
           <div><div class="row"><dt>CHIP</dt><dd>Apple M4 Pro</dd></div></div>
@@ -215,14 +233,15 @@
           <div><div class="row"><dt>SSD</dt><dd>1TB</dd></div></div>
         </dl>
       </div>
-      <div class="frame">
-        <div class="frame-head"><div class="t"><span class="p">~/</span><h3>devices</h3></div><span class="n">2 units</span></div>
+      <div class="frame s2">
+        <div class="frame-head"><div class="t"><span class="p">~/</span><h3>devices</h3></div><span class="idx">03</span></div>
         <dl class="specs">
           <div><div class="row"><dt>PHONE</dt><dd>iPhone 16 Pro</dd></div></div>
           <div><div class="row"><dt>TAB</dt><dd>iPad Pro 11″</dd></div></div>
         </dl>
       </div>
     </div>
+    <p class="rig-total">// <b>3</b> machines · <b>9</b> parts listed</p>
   </div>
 </section>
 
