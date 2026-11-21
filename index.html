@@ -117,6 +117,16 @@
   dd { margin: 0; text-align: right; font-size: .875rem; line-height: 1.25rem; color: var(--ink-hi); }
   .note { margin-top: .125rem; text-align: right; font-family: var(--mono); font-size: .6875rem; color: var(--dim); }
   .note i { font-style: normal; color: #5a5a5a; }
+  /* terminal card with typed text */
+  .term { margin-top: 2.5rem; max-width: 32rem; border: 1px solid var(--line); background: var(--panel); font-family: var(--mono); }
+  .term .bar { justify-content: space-between; }
+  .term-body { padding: 1.25rem 1rem; min-height: 8.5rem; font-size: .875rem; line-height: 1.75rem; color: #ccc; }
+  .term-body .cmd { color: var(--ink-hi); } .term-body .arrow { color: var(--ok); margin-right: .5rem; } .term-body .tilde { color: var(--muted); margin-right: .5rem; }
+  .term-body p { margin: 0; min-height: 1.75rem; }
+  .caret::after { content: "\258D"; margin-left: 2px; color: var(--ink-hi); animation: blink 1.05s steps(2, jump-none) infinite; }
+  @keyframes blink { 0%,50% { opacity: 1; } 50.01%,100% { opacity: 0; } }
+  .term .foot { border-top: 1px solid var(--line); }
+  @media (prefers-reduced-motion: reduce) { .caret::after, .dot { animation: none; } }
 </style>
 </head>
 <body>
@@ -146,6 +156,15 @@
         <a class="btn" href="publications.html">publications</a>
         <a class="btn" href="https://github.com/niklasdgl">github</a>
       </div>
+      <div class="term" aria-label="About">
+        <div class="bar"><span class="lights"><i></i><i></i><i></i></span><span>niklas@portfolio: ~</span><span>v1.0</span></div>
+        <div class="term-body" id="term" aria-live="off">
+          <p class="cmd"><span class="arrow">&rarr;</span><span class="tilde">~</span>cat ~/about.txt</p>
+          <p id="t1"></p>
+          <p id="t2"></p>
+        </div>
+        <div class="foot"><span>// exit code 0 &middot; ttys000 &middot; zsh</span></div>
+      </div>
     </section>
 
     <section aria-label="Lorenz attractor">
@@ -165,41 +184,33 @@
 <section id="rig" class="section" aria-labelledby="rig-heading">
   <div class="wrap">
     <div class="sec-head">
-      <div class="sec-top"><span aria-hidden="true">// 06</span><span class="rule" aria-hidden="true"></span><span class="cmd" aria-hidden="true"><b>$</b> cat ~/setup.txt</span></div>
+      <div class="sec-top"><span aria-hidden="true">// 01</span><span class="rule" aria-hidden="true"></span><span class="cmd" aria-hidden="true"><b>$</b> cat ~/setup.txt</span></div>
       <h2 id="rig-heading"><span aria-hidden="true">#</span> rig</h2>
     </div>
-    <p class="intro">The hardware I run, host on, and tinker with. A bit of overkill for a coding setup — but also a homelab and a small museum of iPhones.</p>
+    <p class="intro">The hardware I train models, code and trade on.</p>
     <div class="rig-grid">
       <div class="frame">
-        <div class="frame-head"><div class="t"><span class="p">~/</span><h3>main rig</h3></div><span class="n">7 units</span></div>
+        <div class="frame-head"><div class="t"><span class="p">~/</span><h3>main rig</h3></div><span class="n">3 units</span></div>
         <dl class="specs">
-          <div><div class="row"><dt>CPU</dt><dd>AMD Ryzen 9 5900X</dd></div></div>
-          <div><div class="row"><dt>GPU</dt><dd>NVIDIA RTX 4060 Ti</dd></div><p class="note"><i>// </i>16GB VRAM</p></div>
-          <div><div class="row"><dt>MOBO</dt><dd>ASUS TUF Gaming B550-Plus</dd></div></div>
-          <div><div class="row"><dt>RAM</dt><dd>32GB DDR4</dd></div><p class="note"><i>// </i>Kingston Fury Beast 3200MHz</p></div>
-          <div><div class="row"><dt>PSU</dt><dd>be quiet! Straight Power 12 850W</dd></div></div>
-          <div><div class="row"><dt>SSD</dt><dd>Samsung 990 EVO Plus 2TB + 850 EVO 500GB</dd></div></div>
-          <div><div class="row"><dt>HDD</dt><dd>Toshiba 500GB 7200RPM</dd></div></div>
+          <div><div class="row"><dt>CPU</dt><dd>Intel Core i9-14900KF</dd></div></div>
+          <div><div class="row"><dt>GPU</dt><dd>NVIDIA RTX 5080</dd></div></div>
+          <div><div class="row"><dt>RAM</dt><dd>64GB DDR5</dd></div><p class="note"><i>// </i>Crucial</p></div>
         </dl>
       </div>
       <div class="frame">
-        <div class="frame-head"><div class="t"><span class="p">~/</span><h3>homelab</h3></div><span class="n">5 units</span></div>
+        <div class="frame-head"><div class="t"><span class="p">~/</span><h3>laptop</h3></div><span class="n">4 units</span></div>
         <dl class="specs">
-          <div><div class="row"><dt>HOST</dt><dd>Lenovo ThinkCentre M710s</dd></div></div>
-          <div><div class="row"><dt>CPU</dt><dd>Intel Core i5-7500</dd></div></div>
-          <div><div class="row"><dt>RAM</dt><dd>16GB DDR4</dd></div></div>
-          <div><div class="row"><dt>SSD</dt><dd>Apacer AS340 240GB</dd></div></div>
-          <div><div class="row"><dt>HDD</dt><dd>WD Blue 500GB 7200RPM</dd></div></div>
+          <div><div class="row"><dt>MODEL</dt><dd>MacBook Pro</dd></div></div>
+          <div><div class="row"><dt>CHIP</dt><dd>Apple M4 Pro</dd></div></div>
+          <div><div class="row"><dt>RAM</dt><dd>32GB</dd></div></div>
+          <div><div class="row"><dt>SSD</dt><dd>1TB</dd></div></div>
         </dl>
       </div>
       <div class="frame">
-        <div class="frame-head"><div class="t"><span class="p">~/</span><h3>devices</h3></div><span class="n">5 units</span></div>
+        <div class="frame-head"><div class="t"><span class="p">~/</span><h3>devices</h3></div><span class="n">2 units</span></div>
         <dl class="specs">
-          <div><div class="row"><dt>PHONE</dt><dd>iPhone 15</dd></div><p class="note"><i>// </i>main</p></div>
-          <div><div class="row"><dt>PHONE</dt><dd>iPhone 8</dd></div><p class="note"><i>// </i>second</p></div>
-          <div><div class="row"><dt>PHONE</dt><dd>iPhone 6s</dd></div><p class="note"><i>// </i>dead motherboard</p></div>
-          <div><div class="row"><dt>PHONE</dt><dd>iPhone 4</dd></div><p class="note"><i>// </i>collection</p></div>
-          <div><div class="row"><dt>TAB</dt><dd>Xiaomi Redmi Pad SE</dd></div></div>
+          <div><div class="row"><dt>PHONE</dt><dd>iPhone 16 Pro</dd></div></div>
+          <div><div class="row"><dt>TAB</dt><dd>iPad Pro 11″</dd></div></div>
         </dl>
       </div>
     </div>
@@ -208,6 +219,24 @@
 
 <script>
 (() => {
+  /* typed about.txt */
+  const LINES = ["Into maths, machine learning and markets.", "Simulation-based inference for chaotic systems."];
+  const t1 = document.getElementById("t1"), t2 = document.getElementById("t2");
+  if (matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    t1.textContent = LINES[0]; t2.textContent = LINES[1];
+  } else {
+    const els = [t1, t2];
+    let li = 0, ci = 0;
+    const type = () => {
+      els.forEach(e => e.classList.remove("caret"));
+      els[li].classList.add("caret");
+      els[li].textContent = LINES[li].slice(0, ++ci);
+      if (ci < LINES[li].length) return setTimeout(type, 38);
+      if (li < LINES.length - 1) { li++; ci = 0; return setTimeout(type, 450); }
+    };
+    setTimeout(type, 600);
+  }
+
   /* live clock in the header */
   const clock = document.getElementById("clock");
   const tick = () => { clock.textContent = new Date().toLocaleTimeString("en-GB", { timeZone: "Europe/London" }); };
