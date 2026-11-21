@@ -43,12 +43,15 @@
 
   /* header: logo left, nav centre, status right */
   header { position: sticky; top: 0; z-index: 50; background: rgba(10,10,10,.85); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); }
-  header .wrap { display: flex; align-items: center; justify-content: space-between; height: 64px; font-family: var(--mono); font-size: .875rem; }
+  header > .wrap:first-child { display: flex; align-items: center; justify-content: space-between; height: 64px; font-family: var(--mono); font-size: .875rem; }
   .logo { display: flex; align-items: center; gap: .75rem; }
   .logo b { display: grid; place-items: center; width: 2rem; height: 2rem; border: 1px solid var(--ink); font-size: .6875rem; font-weight: 500; }
   nav { display: none; gap: 2rem; color: var(--muted); }
   nav a { transition: color .15s; } nav a:hover { color: #fff; }
   @media (min-width: 768px) { nav { display: flex; } }
+  .subnav { display: flex; gap: 1.5rem; padding: .75rem 0; border-bottom: 1px solid var(--line); font-family: var(--mono); font-size: .875rem; color: var(--muted); }
+  .subnav a:hover { color: #fff; }
+  @media (min-width: 768px) { .subnav { display: none; } }
   .status { display: flex; align-items: center; gap: .625rem; font-size: .6875rem; color: var(--muted); }
   .dot { width: .375rem; height: .375rem; border-radius: 50%; background: var(--ok); animation: pulse 2.4s ease-in-out infinite; }
   @keyframes pulse { 0%,100% { opacity: 1; transform: scale(1); } 50% { opacity: .55; transform: scale(.85); } }
@@ -142,6 +145,12 @@
     </nav>
     <div class="status"><span class="dot"></span><span>london</span><span id="clock" aria-hidden="true"></span></div>
   </div>
+  <div class="wrap"><nav class="subnav" aria-label="Mobile navigation">
+    <a href="#rig">rig</a>
+    <a href="cv.html">cv</a>
+    <a href="publications.html">publications</a>
+    <a href="https://github.com/niklasdgl">github</a>
+  </nav></div>
 </header>
 
 <main class="hero">
