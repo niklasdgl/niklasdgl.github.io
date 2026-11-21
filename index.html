@@ -94,8 +94,8 @@
   .intro { max-width: 42rem; margin-bottom: 2rem; font-size: .875rem; line-height: 1.625; color: #ccc; }
   .rig-grid { display: grid; gap: 1rem; }
   @media (min-width: 900px) {
-    .rig-grid { grid-template-columns: 7fr 5fr; grid-template-areas: "main side1" "main side2"; }
-    .frame.main { grid-area: main; } .frame.s1 { grid-area: side1; } .frame.s2 { grid-area: side2; }
+    .rig-grid { grid-template-columns: 7fr 5fr; grid-template-areas: "main side1" "main side2" "main side3"; }
+    .frame.main { grid-area: main; } .frame.s1 { grid-area: side1; } .frame.s2 { grid-area: side2; } .frame.s3 { grid-area: side3; }
   }
   .frame { position: relative; }
   .frame::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 2px; background: var(--ok); transform: scaleY(0); transform-origin: top; transition: transform .3s cubic-bezier(.16,1,.3,1); }
@@ -199,8 +199,13 @@
         <div class="frame-head"><div class="t"><span class="p">~/</span><h3>main rig</h3></div><span class="idx">01</span></div>
         <dl class="specs">
           <div class="hero-spec"><div class="row"><dt>GPU</dt><dd>NVIDIA RTX 5080<small>// trains the models</small></dd></div></div>
-          <div><div class="row"><dt>CPU</dt><dd>Intel Core i9-14900KF</dd></div></div>
+          <div><div class="row"><dt>CPU</dt><dd>Intel Core i9-14900KF</dd></div><p class="note"><i>// </i>24 cores · up to 6.0 GHz</p></div>
+          <div><div class="row"><dt>BOARD</dt><dd>ASUS ROG Maximus Z790 Hero</dd></div></div>
           <div><div class="row"><dt>RAM</dt><dd>64GB DDR5</dd></div><p class="note"><i>// </i>Crucial</p></div>
+          <div><div class="row"><dt>SSD</dt><dd>Samsung 990 Pro 2TB</dd></div><p class="note"><i>// </i>PCIe 4.0 NVMe</p></div>
+          <div><div class="row"><dt>COOLER</dt><dd>Arctic Liquid Freezer III 360</dd></div></div>
+          <div><div class="row"><dt>PSU</dt><dd>Corsair RM1000x</dd></div><p class="note"><i>// </i>1000W · 80+ Gold</p></div>
+          <div><div class="row"><dt>CASE</dt><dd>Lian Li O11 Dynamic EVO</dd></div></div>
         </dl>
       </div>
       <div class="frame s1">
@@ -219,8 +224,16 @@
           <div><div class="row"><dt>TAB</dt><dd>iPad Pro 11″</dd></div></div>
         </dl>
       </div>
+      <div class="frame s3">
+        <div class="frame-head"><div class="t"><span class="p">~/</span><h3>desk</h3></div><span class="idx">04</span></div>
+        <dl class="specs">
+          <div><div class="row"><dt>DISPLAY</dt><dd>MSI MPG 491C QD-OLED</dd></div><p class="note"><i>// </i>5120×1440 · 144 Hz</p></div>
+          <div><div class="row"><dt>KEYS</dt><dd>Wooting 60HE</dd></div></div>
+          <div><div class="row"><dt>MOUSE</dt><dd>Logitech G Pro X Superlight 2</dd></div></div>
+        </dl>
+      </div>
     </div>
-    <p class="rig-total">// <b>3</b> machines · <b>9</b> parts listed</p>
+    <p class="rig-total">// <b>3</b> machines · <b>17</b> parts listed</p>
   </div>
 </section>
 
