@@ -3,26 +3,59 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Publications · Niklas</title>
+<title>publications · niklas</title>
+<meta name="theme-color" content="#0a0a0a">
+<meta name="color-scheme" content="dark">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,450;1,9..144,400&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="page.css">
-<script>try { const t = localStorage.getItem("theme"); if (t) document.documentElement.dataset.theme = t; } catch (e) {}</script>
 </head>
 <body>
-<a href="index.html">← niklas</a>
+
+<header>
+  <div class="wrap">
+    <a class="logo" href="index.html"><b>nd</b><span>~/niklas</span></a>
+    <nav aria-label="Main navigation">
+      <a href="index.html#rig">rig</a>
+      <a href="cv.html">cv</a>
+      <a href="publications.html" aria-current="page">publications</a>
+      <a href="https://github.com/niklasdgl">github</a>
+    </nav>
+    <div class="status"><span class="dot"></span><span>london</span><span id="clock" aria-hidden="true"></span></div>
+  </div>
+  <div class="wrap"><nav class="subnav" aria-label="Mobile navigation">
+    <a href="index.html#rig">rig</a>
+    <a href="cv.html">cv</a>
+    <a href="publications.html" aria-current="page">publications</a>
+    <a href="https://github.com/niklasdgl">github</a>
+  </nav></div>
+</header>
+
 <main>
-  <h1>Public<em>ations</em></h1>
-  <ol>
-    <li><span class="meta">In preparation.</span></li>
-    <!-- Template, one <li> per paper (newest first):
-    <li>
-      <a class="title" href="https://arxiv.org/abs/XXXX.XXXXX">Paper title ↗</a>
-      <span class="meta">A. Author, <b>N. Degliam</b>, B. Author · Venue 2027</span>
-    </li>
-    -->
-  </ol>
+  <div class="wrap">
+    <span class="badge"><span class="dot"></span>research</span>
+    <p class="prompt">$ ls ~/papers</p>
+    <h1>publications<i>.</i></h1>
+
+    <section class="section" aria-labelledby="papers-h">
+      <div class="sec-head">
+        <div class="sec-top"><span aria-hidden="true">// 01</span><span class="rule" aria-hidden="true"></span><span class="cmd" aria-hidden="true"><b>$</b> cat ~/papers.txt</span></div>
+        <h2 id="papers-h"><span aria-hidden="true">#</span> papers</h2>
+      </div>
+      <ol class="frame">
+        <li><span class="meta">In preparation.</span></li>
+        <!-- Template, one <li> per paper (newest first):
+        <li>
+          <a class="title" href="https://arxiv.org/abs/XXXX.XXXXX">Paper title ↗</a>
+          <span class="meta">A. Author, <b>N. Degliam</b>, B. Author · Venue 2027</span>
+        </li>
+        -->
+      </ol>
+    </section>
+  </div>
 </main>
+<script src="page.js"></script>
 </body>
 </html>

@@ -3,78 +3,128 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>CV · Niklas</title>
+<title>cv · niklas</title>
+<meta name="theme-color" content="#0a0a0a">
+<meta name="color-scheme" content="dark">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,450;1,9..144,400&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="page.css">
-<script>try { const t = localStorage.getItem("theme"); if (t) document.documentElement.dataset.theme = t; } catch (e) {}</script>
 </head>
 <body>
-<a href="index.html">← niklas</a>
-<main>
-  <h1>C<em>V</em></h1>
 
-  <h2>education</h2>
-  <ol>
-    <li>
+<header>
+  <div class="wrap">
+    <a class="logo" href="index.html"><b>nd</b><span>~/niklas</span></a>
+    <nav aria-label="Main navigation">
+      <a href="index.html#rig">rig</a>
+      <a href="cv.html" aria-current="page">cv</a>
+      <a href="publications.html">publications</a>
+      <a href="https://github.com/niklasdgl">github</a>
+    </nav>
+    <div class="status"><span class="dot"></span><span>london</span><span id="clock" aria-hidden="true"></span></div>
+  </div>
+  <div class="wrap"><nav class="subnav" aria-label="Mobile navigation">
+    <a href="index.html#rig">rig</a>
+    <a href="cv.html" aria-current="page">cv</a>
+    <a href="publications.html">publications</a>
+    <a href="https://github.com/niklasdgl">github</a>
+  </nav></div>
+</header>
+
+<main>
+  <div class="wrap">
+    <span class="badge"><span class="dot"></span>curriculum vitae</span>
+    <p class="prompt">$ cat ~/cv.txt</p>
+    <h1>cv<i>.</i></h1>
+
+  <section class="section" aria-labelledby="education-h">
+    <div class="sec-head">
+      <div class="sec-top"><span aria-hidden="true">// 01</span><span class="rule" aria-hidden="true"></span><span class="cmd" aria-hidden="true"><b>$</b> cat ~/education.txt</span></div>
+      <h2 id="education-h"><span aria-hidden="true">#</span> education</h2>
+    </div>
+    <ol class="frame">
+      <li>
       <span class="title">M.Sc. Computer Science &amp; Mathematics</span>
       <span class="meta">Goethe University Frankfurt · <b>1.0</b>, top 1% of cohort</span>
-    </li>
-    <li>
+      </li>
+      <li>
       <span class="title">B.Sc. Mathematical &amp; Theoretical Physics</span>
       <span class="meta">Goethe University Frankfurt · <b>1.2</b>, top 2% of cohort</span>
-    </li>
-  </ol>
+      </li>
+  
+    </ol>
+  </section>
 
-  <h2>experience</h2>
-  <ol>
-    <li>
+  <section class="section" aria-labelledby="experience-h">
+    <div class="sec-head">
+      <div class="sec-top"><span aria-hidden="true">// 02</span><span class="rule" aria-hidden="true"></span><span class="cmd" aria-hidden="true"><b>$</b> cat ~/experience.txt</span></div>
+      <h2 id="experience-h"><span aria-hidden="true">#</span> experience</h2>
+    </div>
+    <ol class="frame">
+      <li>
       <span class="title">Hudson River Trading</span>
       <span class="when">incoming</span>
       <span class="meta">Quantitative Researcher</span>
-    </li>
-    <li>
+      </li>
+      <li>
       <span class="title">Jane Street</span>
       <span class="when">incoming</span>
       <span class="meta">Visiting Researcher</span>
-    </li>
-    <li>
+      </li>
+      <li>
       <span class="title">CERN</span>
       <span class="when">2027</span>
       <span class="meta">Machine Learning Engineer Intern (incoming) · Geneva</span>
-    </li>
-    <li>
+      </li>
+      <li>
       <span class="title">HSBC</span>
       <span class="when">2026</span>
       <span class="meta">Equity Derivatives Intern · Düsseldorf</span>
-    </li>
-    <li>
+      </li>
+      <li>
       <span class="title">OTC Flow</span>
       <span class="when"></span>
       <span class="meta">Commodities Trading Intern · Amsterdam</span>
-    </li>
-    <li>
+      </li>
+      <li>
       <span class="title">Goethe University</span>
       <span class="when">2026</span>
       <span class="meta">Research Assistant · Frankfurt</span>
-    </li>
-  </ol>
+      </li>
+  
+    </ol>
+  </section>
 
-  <h2>activities</h2>
-  <ol>
-    <li>
+  <section class="section" aria-labelledby="activities-h">
+    <div class="sec-head">
+      <div class="sec-top"><span aria-hidden="true">// 03</span><span class="rule" aria-hidden="true"></span><span class="cmd" aria-hidden="true"><b>$</b> cat ~/activities.txt</span></div>
+      <h2 id="activities-h"><span aria-hidden="true">#</span> activities</h2>
+    </div>
+    <ol class="frame">
+      <li>
       <span class="title">Mathematik Olympiade</span>
       <span class="when">2026 –</span>
       <span class="meta">Olympiad trainer &amp; mentor for 40+ students, national olympiad and IMO prep</span>
-    </li>
-  </ol>
+      </li>
+  
+    </ol>
+  </section>
 
-  <h2>skills</h2>
-  <ol>
-    <li><span class="full">Python, C++, C#, C, Java, Julia, SQL, R · Git, Docker, Linux</span></li>
-    <li><span class="full">German (native), English (fluent), French (advanced)</span></li>
-  </ol>
+  <section class="section" aria-labelledby="skills-h">
+    <div class="sec-head">
+      <div class="sec-top"><span aria-hidden="true">// 04</span><span class="rule" aria-hidden="true"></span><span class="cmd" aria-hidden="true"><b>$</b> cat ~/skills.txt</span></div>
+      <h2 id="skills-h"><span aria-hidden="true">#</span> skills</h2>
+    </div>
+    <ol class="frame">
+      <li><span class="full">Python, C++, C#, C, Java, Julia, SQL, R · Git, Docker, Linux</span></li>
+      <li><span class="full">German (native), English (fluent), French (advanced)</span></li>
+  
+    </ol>
+  </section>
+  </div>
 </main>
+<script src="page.js"></script>
 </body>
 </html>
