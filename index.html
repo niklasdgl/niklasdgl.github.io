@@ -94,8 +94,8 @@
   .intro { max-width: 42rem; margin-bottom: 2rem; font-size: .875rem; line-height: 1.625; color: #ccc; }
   .rig-grid { display: grid; gap: 1rem; }
   @media (min-width: 900px) {
-    .rig-grid { grid-template-columns: 7fr 5fr; grid-template-areas: "main side1" "main side2" "main side3"; }
-    .frame.main { grid-area: main; } .frame.s1 { grid-area: side1; } .frame.s2 { grid-area: side2; } .frame.s3 { grid-area: side3; }
+    .rig-grid { grid-template-columns: 7fr 5fr; grid-template-areas: "main side0" "main side1" "main side2" "main side3"; }
+    .frame.main { grid-area: main; } .frame.s0 { grid-area: side0; } .frame.s1 { grid-area: side1; } .frame.s2 { grid-area: side2; } .frame.s3 { grid-area: side3; }
   }
   .frame { position: relative; }
   .frame::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 2px; background: var(--ok); transform: scaleY(0); transform-origin: top; transition: transform .3s cubic-bezier(.16,1,.3,1); }
@@ -198,7 +198,7 @@
       <div class="frame main">
         <div class="frame-head"><div class="t"><span class="p">~/</span><h3>main rig</h3></div><span class="idx">01</span></div>
         <dl class="specs">
-          <div class="hero-spec"><div class="row"><dt>GPU</dt><dd>NVIDIA RTX 5080<small>// trains the models</small></dd></div></div>
+          <div class="hero-spec"><div class="row"><dt>GPU</dt><dd>NVIDIA RTX 5080</dd></div></div>
           <div><div class="row"><dt>CPU</dt><dd>Intel Core i9-14900KF</dd></div><p class="note"><i>// </i>24 cores · up to 6.0 GHz</p></div>
           <div><div class="row"><dt>BOARD</dt><dd>ASUS ROG Maximus Z790 Hero</dd></div></div>
           <div><div class="row"><dt>RAM</dt><dd>64GB DDR5</dd></div><p class="note"><i>// </i>Crucial</p></div>
@@ -208,8 +208,14 @@
           <div><div class="row"><dt>CASE</dt><dd>Lian Li O11 Dynamic EVO</dd></div></div>
         </dl>
       </div>
+      <div class="frame s0">
+        <div class="frame-head"><div class="t"><span class="p">~/</span><h3>server</h3></div><span class="idx">02</span></div>
+        <dl class="specs">
+          <div><div class="row"><dt>GPU</dt><dd>8× NVIDIA H100</dd></div><p class="note"><i>// </i>640GB HBM3 total</p></div>
+        </dl>
+      </div>
       <div class="frame s1">
-        <div class="frame-head"><div class="t"><span class="p">~/</span><h3>laptop</h3></div><span class="idx">02</span></div>
+        <div class="frame-head"><div class="t"><span class="p">~/</span><h3>laptop</h3></div><span class="idx">03</span></div>
         <dl class="specs">
           <div><div class="row"><dt>MODEL</dt><dd>MacBook Pro</dd></div></div>
           <div><div class="row"><dt>CHIP</dt><dd>Apple M4 Pro</dd></div></div>
@@ -218,14 +224,14 @@
         </dl>
       </div>
       <div class="frame s2">
-        <div class="frame-head"><div class="t"><span class="p">~/</span><h3>devices</h3></div><span class="idx">03</span></div>
+        <div class="frame-head"><div class="t"><span class="p">~/</span><h3>devices</h3></div><span class="idx">04</span></div>
         <dl class="specs">
           <div><div class="row"><dt>PHONE</dt><dd>iPhone 16 Pro</dd></div></div>
           <div><div class="row"><dt>TAB</dt><dd>iPad Pro 11″</dd></div></div>
         </dl>
       </div>
       <div class="frame s3">
-        <div class="frame-head"><div class="t"><span class="p">~/</span><h3>desk</h3></div><span class="idx">04</span></div>
+        <div class="frame-head"><div class="t"><span class="p">~/</span><h3>desk</h3></div><span class="idx">05</span></div>
         <dl class="specs">
           <div><div class="row"><dt>DISPLAY</dt><dd>MSI MPG 491C QD-OLED</dd></div><p class="note"><i>// </i>5120×1440 · 144 Hz</p></div>
           <div><div class="row"><dt>KEYS</dt><dd>NuPhy Air75 V4</dd></div></div>
@@ -233,7 +239,7 @@
         </dl>
       </div>
     </div>
-    <p class="rig-total">// <b>3</b> machines · <b>17</b> parts listed</p>
+    <p class="rig-total">// <b>3</b> machines · <b>18</b> parts listed</p>
   </div>
 </section>
 
