@@ -250,7 +250,7 @@
     { cmd: "cat ~/skills.txt", lines: ["Python, C++, C#, C, Java, Julia, SQL, R.", "Git, Docker, Linux."] },
     { cmd: "cat ~/now.txt",    lines: ["Based in London.", "Research assistant at Goethe University.", "Olympiad trainer and mentor."] },
   ];
-  const HOLD_MS = 10000, CHAR_MS = 28, LINE_MS = 350;
+  const HOLD_MS = 4000, CHAR_MS = 28, LINE_MS = 350;
   const termBody = document.getElementById("term");
   const sleep = (ms) => new Promise(r => setTimeout(r, ms));
   const typeInto = async (el, text, ms) => {
