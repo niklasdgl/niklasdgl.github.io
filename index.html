@@ -127,10 +127,9 @@
   .note { margin-top: .125rem; text-align: right; font-family: var(--mono); font-size: .6875rem; color: var(--dim); }
   .note i { font-style: normal; color: #5a5a5a; }
   /* terminal card with typed text */
-  .terms { display: grid; gap: 1rem; }
   .term { max-width: 36rem; border: 1px solid var(--line); background: var(--panel); font-family: var(--mono); }
   .term .bar { justify-content: space-between; }
-  .term-body { padding: 1.5rem 1.25rem; min-height: 9rem; font-size: .875rem; line-height: 1.75rem; color: #ccc; }
+  .term-body { padding: 1.5rem 1.25rem; min-height: 11rem; font-size: .875rem; line-height: 1.75rem; color: #ccc; }
   .term-body .cmd { color: var(--ink-hi); } .term-body .arrow { color: var(--ok); margin-right: .5rem; } .term-body .tilde { color: var(--muted); margin-right: .5rem; }
   .term-body p { margin: 0; min-height: 1.75rem; }
   .caret::after { content: "\258D"; margin-left: 2px; color: var(--ink-hi); animation: blink 1.05s steps(2, jump-none) infinite; }
@@ -174,32 +173,13 @@
       </div>
     </section>
 
-    <section class="terms" aria-label="About">
-      <div class="term" aria-label="portfolio">
+    <section aria-label="About">
+      <div class="term">
         <div class="bar"><span class="lights"><i></i><i></i><i></i></span><span>niklas@portfolio: ~</span><span>v1.0</span></div>
-        <div class="term-body" aria-live="off">
+        <div class="term-body" id="term" aria-live="off">
           <p class="cmd"><span class="arrow">&rarr;</span><span class="tilde">~</span>cat ~/about.txt</p>
-          <p data-text="Into maths, physics and machine learning."></p>
-          <p data-text="Simulation-based inference for chaotic systems."></p>
-        </div>
-        <div class="foot"><span>// exit code 0 &middot; ttys000 &middot; zsh</span></div>
-      </div>
-      <div class="term" aria-label="skills">
-        <div class="bar"><span class="lights"><i></i><i></i><i></i></span><span>niklas@skills: ~</span><span>v1.0</span></div>
-        <div class="term-body" aria-live="off">
-          <p class="cmd"><span class="arrow">&rarr;</span><span class="tilde">~</span>cat ~/skills.txt</p>
-          <p data-text="Python, C++, C#, C, Java, Julia, SQL, R."></p>
-          <p data-text="Git, Docker, Linux."></p>
-        </div>
-        <div class="foot"><span>// exit code 0 &middot; ttys000 &middot; zsh</span></div>
-      </div>
-      <div class="term" aria-label="now">
-        <div class="bar"><span class="lights"><i></i><i></i><i></i></span><span>niklas@now: ~</span><span>v1.0</span></div>
-        <div class="term-body" aria-live="off">
-          <p class="cmd"><span class="arrow">&rarr;</span><span class="tilde">~</span>cat ~/now.txt</p>
-          <p data-text="Based in London."></p>
-          <p data-text="Research assistant at Goethe University."></p>
-          <p data-text="Olympiad trainer and mentor."></p>
+          <p>Into maths, physics and machine learning.</p>
+          <p>Simulation-based inference for chaotic systems.</p>
         </div>
         <div class="foot"><span>// exit code 0 &middot; ttys000 &middot; zsh</span></div>
       </div>
@@ -264,22 +244,42 @@
 
 <script>
 (() => {
-  /* typed terminals: one line after another, card after card */
-  const lines = [...document.querySelectorAll(".term-body p[data-text]")];
-  if (matchMedia("(prefers-reduced-motion: reduce)").matches) {
-    lines.forEach(el => { el.textContent = el.dataset.text; });
-  } else {
-    let li = 0, ci = 0;
-    const type = () => {
-      lines.forEach(e => e.classList.remove("caret"));
-      const el = lines[li], text = el.dataset.text;
-      el.classList.add("caret");
-      el.textContent = text.slice(0, ++ci);
-      if (ci < text.length) return setTimeout(type, 28);
-      if (li < lines.length - 1) { li++; ci = 0; return setTimeout(type, 350); }
-    };
-    setTimeout(type, 600);
-  }
+  /* one terminal that cycles through scenes, 10 s apart */
+  const SCENES = [
+    { cmd: "cat ~/about.txt",  lines: ["Into maths, physics and machine learning.", "Simulation-based inference for chaotic systems."] },
+    { cmd: "cat ~/skills.txt", lines: ["Python, C++, C#, C, Java, Julia, SQL, R.", "Git, Docker, Linux."] },
+    { cmd: "cat ~/now.txt",    lines: ["Based in London.", "Research assistant at Goethe University.", "Olympiad trainer and mentor."] },
+  ];
+  const HOLD_MS = 10000, CHAR_MS = 28, LINE_MS = 350;
+  const termBody = document.getElementById("term");
+  const sleep = (ms) => new Promise(r => setTimeout(r, ms));
+  const typeInto = async (el, text, ms) => {
+    el.classList.add("caret");
+    for (let i = 1; i <= text.length; i++) { el.textContent = text.slice(0, i); await sleep(ms); }
+    el.classList.remove("caret");
+  };
+  const runTerminal = async () => {
+    for (let n = 0; ; n = (n + 1) % SCENES.length) {
+      const { cmd, lines } = SCENES[n];
+      termBody.replaceChildren();
+      const head = document.createElement("p");
+      head.className = "cmd";
+      const arrow = document.createElement("span"); arrow.className = "arrow"; arrow.textContent = "\u2192";
+      const tilde = document.createElement("span"); tilde.className = "tilde"; tilde.textContent = "~";
+      const cmdEl = document.createElement("span");
+      head.append(arrow, tilde, cmdEl); termBody.append(head);
+      await typeInto(cmdEl, cmd, CHAR_MS * 1.5);
+      await sleep(LINE_MS);
+      for (const line of lines) {
+        const p = document.createElement("p"); termBody.append(p);
+        await typeInto(p, line, CHAR_MS);
+        await sleep(LINE_MS);
+      }
+      termBody.lastElementChild.classList.add("caret");
+      await sleep(HOLD_MS);
+    }
+  };
+  if (!matchMedia("(prefers-reduced-motion: reduce)").matches) setTimeout(runTerminal, 600);
 
   /* live clock in the header */
   const clock = document.getElementById("clock");
