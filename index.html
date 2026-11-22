@@ -3,14 +3,14 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>niklas — maths, physics and markets</title>
-<meta name="description" content="Niklas Degliam — maths, physics and markets. London.">
+<title>niklas — maths, physics and ml</title>
+<meta name="description" content="Niklas Degliam — maths, physics and ml. London.">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://niklasdgl.github.io/">
 <meta property="og:title" content="Niklas Degliam">
-<meta property="og:description" content="Maths, physics and markets. London.">
+<meta property="og:description" content="Maths, physics and ML. London.">
 <meta property="og:image" content="https://niklasdgl.github.io/og.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
@@ -127,9 +127,10 @@
   .note { margin-top: .125rem; text-align: right; font-family: var(--mono); font-size: .6875rem; color: var(--dim); }
   .note i { font-style: normal; color: #5a5a5a; }
   /* terminal card with typed text */
+  .terms { display: grid; gap: 1rem; }
   .term { max-width: 36rem; border: 1px solid var(--line); background: var(--panel); font-family: var(--mono); }
   .term .bar { justify-content: space-between; }
-  .term-body { padding: 1.5rem 1.25rem; min-height: 11rem; font-size: .875rem; line-height: 1.75rem; color: #ccc; }
+  .term-body { padding: 1.5rem 1.25rem; min-height: 9rem; font-size: .875rem; line-height: 1.75rem; color: #ccc; }
   .term-body .cmd { color: var(--ink-hi); } .term-body .arrow { color: var(--ok); margin-right: .5rem; } .term-body .tilde { color: var(--muted); margin-right: .5rem; }
   .term-body p { margin: 0; min-height: 1.75rem; }
   .caret::after { content: "\258D"; margin-left: 2px; color: var(--ink-hi); animation: blink 1.05s steps(2, jump-none) infinite; }
@@ -162,10 +163,10 @@
 <main class="hero">
   <div class="wrap">
     <section aria-labelledby="name">
-      <div class="tags"><span class="badge"><span class="dot"></span>maths · physics · markets</span><span>@london</span></div>
+      <div class="tags"><span class="badge"><span class="dot"></span>maths · physics · ml</span><span>@london</span></div>
       <p class="prompt">$ hello, world &mdash; i&rsquo;m</p>
       <h1 id="name">niklas<i>.</i></h1>
-      <p class="lead">Studying <b>probability</b>, <b>physics</b> and <b>markets</b>. Simulation-based inference for chaotic systems.</p>
+      <p class="lead">Studying <b>probability</b>, <b>physics</b> and <b>machine learning</b>. Simulation-based inference for chaotic systems.</p>
       <div class="actions">
         <a class="btn solid" href="cv.html">view cv &#8599;</a>
         <a class="btn" href="publications.html">publications</a>
@@ -173,13 +174,32 @@
       </div>
     </section>
 
-    <section aria-label="About">
-      <div class="term" aria-label="About">
+    <section class="terms" aria-label="About">
+      <div class="term" aria-label="portfolio">
         <div class="bar"><span class="lights"><i></i><i></i><i></i></span><span>niklas@portfolio: ~</span><span>v1.0</span></div>
-        <div class="term-body" id="term" aria-live="off">
+        <div class="term-body" aria-live="off">
           <p class="cmd"><span class="arrow">&rarr;</span><span class="tilde">~</span>cat ~/about.txt</p>
-          <p id="t1"></p>
-          <p id="t2"></p>
+          <p data-text="Into maths, physics and machine learning."></p>
+          <p data-text="Simulation-based inference for chaotic systems."></p>
+        </div>
+        <div class="foot"><span>// exit code 0 &middot; ttys000 &middot; zsh</span></div>
+      </div>
+      <div class="term" aria-label="skills">
+        <div class="bar"><span class="lights"><i></i><i></i><i></i></span><span>niklas@skills: ~</span><span>v1.0</span></div>
+        <div class="term-body" aria-live="off">
+          <p class="cmd"><span class="arrow">&rarr;</span><span class="tilde">~</span>cat ~/skills.txt</p>
+          <p data-text="Python, C++, C#, C, Java, Julia, SQL, R."></p>
+          <p data-text="Git, Docker, Linux."></p>
+        </div>
+        <div class="foot"><span>// exit code 0 &middot; ttys000 &middot; zsh</span></div>
+      </div>
+      <div class="term" aria-label="now">
+        <div class="bar"><span class="lights"><i></i><i></i><i></i></span><span>niklas@now: ~</span><span>v1.0</span></div>
+        <div class="term-body" aria-live="off">
+          <p class="cmd"><span class="arrow">&rarr;</span><span class="tilde">~</span>cat ~/now.txt</p>
+          <p data-text="Based in London."></p>
+          <p data-text="Research assistant at Goethe University."></p>
+          <p data-text="Olympiad trainer and mentor."></p>
         </div>
         <div class="foot"><span>// exit code 0 &middot; ttys000 &middot; zsh</span></div>
       </div>
@@ -244,20 +264,19 @@
 
 <script>
 (() => {
-  /* typed about.txt */
-  const LINES = ["Into maths, physics and markets.", "Simulation-based inference for chaotic systems."];
-  const t1 = document.getElementById("t1"), t2 = document.getElementById("t2");
+  /* typed terminals: one line after another, card after card */
+  const lines = [...document.querySelectorAll(".term-body p[data-text]")];
   if (matchMedia("(prefers-reduced-motion: reduce)").matches) {
-    t1.textContent = LINES[0]; t2.textContent = LINES[1];
+    lines.forEach(el => { el.textContent = el.dataset.text; });
   } else {
-    const els = [t1, t2];
     let li = 0, ci = 0;
     const type = () => {
-      els.forEach(e => e.classList.remove("caret"));
-      els[li].classList.add("caret");
-      els[li].textContent = LINES[li].slice(0, ++ci);
-      if (ci < LINES[li].length) return setTimeout(type, 38);
-      if (li < LINES.length - 1) { li++; ci = 0; return setTimeout(type, 450); }
+      lines.forEach(e => e.classList.remove("caret"));
+      const el = lines[li], text = el.dataset.text;
+      el.classList.add("caret");
+      el.textContent = text.slice(0, ++ci);
+      if (ci < text.length) return setTimeout(type, 28);
+      if (li < lines.length - 1) { li++; ci = 0; return setTimeout(type, 350); }
     };
     setTimeout(type, 600);
   }
